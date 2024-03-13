@@ -6,14 +6,6 @@ import {
 } from "./user.controller";
 import { $ref } from "./user.schema";
 
-async function authenticate(request: FastifyRequest, reply: FastifyReply) {
-  try {
-    await request.jwtVerify();
-  } catch (error) {
-    reply.code(401).send({ message: "Non autorisé. Jeton JWT invalide." });
-  }
-}
-
 async function userRoutes(server: FastifyInstance) {
   server.post(
     "/",
@@ -41,13 +33,7 @@ async function userRoutes(server: FastifyInstance) {
     loginHandler
   );
 
-  server.get(
-    "/",
-    {
-      preHandler: authenticate,
-    },
-    getUsersHandler
-  );
+  server.get("/", { preHandler: [server.authenticate] }, getUsersHandler);
 }
 
 export default userRoutes;

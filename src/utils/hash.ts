@@ -1,5 +1,4 @@
 import crypto from "crypto";
-import { string } from "zod";
 
 export function hashPassword(password: string) {
   const salt = crypto.randomBytes(16).toString("hex");

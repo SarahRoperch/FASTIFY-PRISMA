@@ -9,13 +9,15 @@ export async function createProduct(
   });
 }
 
-export function getProduct() {
+export function getProducts() {
   return prisma.product.findMany({
     select: {
       content: true,
       title: true,
       price: true,
       id: true,
+      createdAt: true,
+      updatedAt: true,
       owner: {
         select: {
           name: true,
